@@ -41,7 +41,7 @@ if(isset($_POST['addScore'])){
 }
 
 foreach ($players as $i => $player) {?>
-  <form class="" action="/index.php" method="post">
+  <form class="" action="index.php" method="post">
     <input type="hidden" name="gameOn" value="1">
     <input type="hidden" name="playerCount" value="<?=$playerCount?>">
     <input type="hidden" name="addScore" value="<?=$i?>">
