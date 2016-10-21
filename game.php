@@ -10,15 +10,9 @@ include_once('includes/score.php');
 
 $playerIds = $_POST['players'];
 
-if(!is_array($playerIds)){
-  $playerIds = explode(',', $playerIds);
-}
-
-
 //player clicked a name so we should add the score and remove player from array
-
 $playerCount = (int)$_POST['playerCount'];
-$players = Database::getNamesByIds($playerIds);
+$players = Database::getPlayersByIds($playerIds);
 
 if(isset($_POST['addScore'])){
   $playerIndex = (int)$_POST['addScore'];
@@ -31,11 +25,11 @@ if(isset($_POST['addScore'])){
   $score = ($playerCount - count($players)) * 10;
 
   if(count($players) === 1){
-    echo "Wohooo " . $players[0] . " has won<br>";
     $winner = $players[0];
     $winnerScore = $score + 30;
-    echo $player . ' got ' . $score . ' points<br>';
-    echo $winner . '(winner) got ' . $winnerScore . ' points<br>';
+    echo "Wohooo " . $winner['name'] . " has won<br>";
+    echo $player['name'] . ' got ' . $score . ' points<br>';
+    echo $winner['name'] . '(winner) got ' . $winnerScore . ' points<br>';
     echo '<a href="scoreboard.php">Show Scoreboard</a>';
     Score::addScore($winner, $winnerScore, 1);
     Score::addScore($player, $score, 0);
@@ -43,19 +37,18 @@ if(isset($_POST['addScore'])){
   }
 
   Score::addScore($player, $score, 0);
-  echo $player . ' got ' . $score . ' points<br>';
+  echo $player['name'] . ' got ' . $score . ' points<br>';
 }
 
-$playersTxt = join(',', $playerIds);
-
-foreach ($players as $i => $name) {?>
-
+foreach ($players as $i => $player) {?>
   <form class="" action="/index.php" method="post">
     <input type="hidden" name="gameOn" value="1">
     <input type="hidden" name="playerCount" value="<?=$playerCount?>">
     <input type="hidden" name="addScore" value="<?=$i?>">
-    <input type="hidden" name="players" value="<?=$playersTxt?>">
-    <button type="submit"><?=$name?></button>
+    <?php foreach ($players as $i2 => $player2) { ?>
+    <input type="hidden" name="players[]" value="<?=$player2['id']?>">
+    <?php } ?>
+    <button type="submit"><?=$player['name']?></button>
   </form>
 
 <?php } ?>

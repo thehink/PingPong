@@ -17,9 +17,9 @@ include_once('includes/score.php');
 //get scores => format => ['Benjamin R' => ['score' => 2, 'wins' => 3]
 $scores = Score::GetScores();
 
-foreach ($scores as $name => $score) {
+foreach ($scores as $id => $score) {
   echo '<tr>';
-  echo '<td>'. $name . '</td>';
+  echo '<td>'. $score['name'] . '</td>';
   echo '<td>'. $score['score'] . '</td>';
   echo '<td>'. $score['wins'] . '</td>';
   echo '<td>'. $score['games'] . '</td>';

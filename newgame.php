@@ -18,7 +18,7 @@ include_once('includes/database.php');
         //cast playCount to int to make sure its an integer
         //could add more checks on playerCount. Like a check for negative and too high numbers
         $playerCount = (int)$_POST['playCount'];
-        $playerNames = Database::getNames();
+        $playerNames = Database::getPlayers();
         ?>
         <form method="POST" action="index.php">
           <label for="playCount" class="label">Enter player names</label>
@@ -27,8 +27,8 @@ include_once('includes/database.php');
           <?php for($i = 0; $i < $playerCount; $i++) { ?>
             <label for="players[]" class="label">Player <?=($i+1)?></label>
             <select name="players[]">
-              <?php foreach($playerNames as $id => $name) { ?>
-                <option value="<?=$id?>"><?=$name?></option>
+              <?php foreach($playerNames as $player) { ?>
+                <option value="<?=$player['id']?>"><?=$player['name']?></option>
               <?php } ?>
             </select>
           <?php } ?>

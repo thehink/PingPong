@@ -9,42 +9,27 @@ Database::getNames() -> [Array of names]
 */
 
 class Database{
-  private static $players = [
-    'Robert N',
-    'Lars K',
-    'Joakim R',
-    'Benjamin R',
-    'Marie E',
-    'Maria GN',
-    'Axel B',
-    'Amin E-R',
-    'André H',
-    'Carl Å',
-    'Christian B',
-    'Katarina C',
-    'Erica G',
-    'Jeremy D',
-    'Kristjan F',
-    'Mathias K',
-    'Signe B',
-    'Staffan M',
-    'Victor O',
-    'Max S',
-    'Johannes T',
-    'Vincent K',
-    'Harry E (Revolutionist)'
-  ];
-
   static function readNamesFromTxt(){
-
+    $namesText = file_get_contents('names.txt');
+    $names = preg_split("/\\r\\n|\\r|\\n/", $namesText);
+    return $names;
   }
 
-  static function getNames(){
-    asort(self::$players);
-    return self::$players;
+  static function getPlayers(){
+    $nameList = self::readNamesFromTxt();
+    sort($nameList);
+
+    $names = [];
+    for ($i=0; $i < count($nameList); $i++) {
+      array_push($names, [
+        'id' => $i,
+        'name' => $nameList[$i]
+      ]);
+    }
+    return $names;
   }
 
-  static function getNamesByIds($arr){
+  static function getPlayersByIds($arr){
     $names = self::getNames();
     $selectedNames = [];
 

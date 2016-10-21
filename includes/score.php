@@ -25,19 +25,20 @@ class Score{
     return $scores;
   }
 
-  public static function addScore($name, $points, $wins){
+  public static function addScore($player, $points, $wins){
     $scores = self::getScores();
-    if(!array_key_exists($name, $scores)){
-      $scores[$name] = [
+    if(!array_key_exists($player['id'], $scores)){
+      $scores[$player['id']] = [
+        'name' => $player['name'],
         'score' => 0,
         'wins' => 0,
         'games' => 0
       ];
     }
 
-    $scores[$name]['score'] += $points;
-    $scores[$name]['wins'] += $wins;
-    $scores[$name]['games'] += 1;
+    $scores[$player['id']]['score'] += $points;
+    $scores[$player['id']]['wins'] += $wins;
+    $scores[$player['id']]['games'] += 1;
 
     self::saveScore($scores);
   }
