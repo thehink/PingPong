@@ -9,5 +9,6 @@
 		<main class="mainWrapper">
 			<header>
 				<h2>Ping Pong Score Master <br><span>3000</span></h2>
+        <a href="index.php">Home</a>
         <a href="scoreboard.php">Scoreboard</a>
 			</header>
