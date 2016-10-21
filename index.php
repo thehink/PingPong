@@ -10,7 +10,7 @@
 			<header>
 				<?php if (!isset($_POST['start'])): ?>
 					<h2>Ping Pong Score Master <br><span>3000</span></h2>
-					<form method="POST">
+					<form method="POST" action="gameOn.php">
 						<button type="submit" name="start">NEW ROUND</button>
 					</form>
 				<?php endif; ?>
