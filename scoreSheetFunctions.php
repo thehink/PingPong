@@ -8,4 +8,8 @@ function addScore($userName, $score) {
 function getScores() {
   return file_get_contents('scores.txt');
 }
+
+function validateGameOptions() {
+  
+}
  ?>
