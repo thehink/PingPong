@@ -3,7 +3,15 @@ $num = 1;
 $classMates = ['', 'Robert N', 'Lars K', 'Joakim R', 'Benjamin R', 'Marie E', 'Maria GN',
                'Axel B', 'Amin E-R', 'André H', 'Carl Å', 'Christian B', 'Katarina C',
                'Erica G', 'Jeremy D', 'Kristjan F', 'Mathias K', 'Signe B', 'Staffan M',
-               'Victor O'];
+<<<<<<< HEAD
+<<<<<<< HEAD
+               'Victor O', 'Max S', 'Johannes T', 'Vincent K'];
+=======
+               'Victor O', 'Harry E (Revolutionist)'];
+>>>>>>> Niklasson89/master
+=======
+               'Victor O', 'Harry E (Revolutionist)'];
+>>>>>>> Niklasson89/master
 asort($classMates);
 
 if (isset($_POST['numPlayers'])) {

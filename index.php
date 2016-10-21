@@ -31,7 +31,7 @@
 
 
 			if (isset($_POST['start'])) {
-				echo 'How many players? <form method="POST" action="names.php"><input type="number" name="numPlayers"></input><button>submit</button></form>';
+				echo 'How many players? <form method="POST" action="names.php"><input type="number" name="numPlayers"><br><br></input><button>submit</button></form>';
 			}
 
 
@@ -43,5 +43,9 @@
 
 			?>
 		</main>
+    <footer>
+      <p>© <?php echo date("Y"); ?> WU16. <a href="README.md">Terms of service apply</a>
+      <br>Please feel free to use Ping Pong Score Master 3000</p>
+    </footer>
   </body>
 </html>
