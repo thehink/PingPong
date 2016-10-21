@@ -1,0 +1,59 @@
+/*Do the usual style resets*/
+@import "reset.css";
+
+/*Import heavy font style*/
+@import url('https://fonts.googleapis.com/css?family=Coda+Caption:800');
+
+/*General global styles*/
+* {
+	box-sizing: border-box;
+}
+body {
+	background: #eee;
+}
+
+/*Font styles*/
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'Coda', sans-serif;
+	text-align: center;
+}
+h2 {
+	font-size: 32px;
+	font-weight: 800;
+	margin: 15px 0;
+	width: 100%;
+}
+h2 span {
+	font-size: 170px;
+}
+button {
+	background: #17bba8;
+	border: 5px solid #17bba8;
+	padding: 10px 15px;
+	font-family: 'Coda', sans-serif;
+	font-weight: 800;
+	font-size: 24px;
+	color: #fff;
+	border-radius: 15px;
+}
+button:hover {
+	background: #fff;
+	color: #17bba8;
+	cursor: pointer;
+}
+
+/*Layout*/
+.mainWrapper {
+	max-width: 750px;
+	height: 100%;
+	margin: 0 auto;
+	background: #fff;
+	padding: 50px;
+	display: flex;
+	justify-content: center;
+}
+header {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
