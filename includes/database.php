@@ -30,7 +30,7 @@ class Database{
   }
 
   static function getPlayersByIds($arr){
-    $names = self::getNames();
+    $names = self::getPlayers();
     $selectedNames = [];
 
     foreach ($arr as $i => $id) {
