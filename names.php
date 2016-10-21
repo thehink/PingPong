@@ -3,7 +3,7 @@ $num = 1;
 $classMates = ['', 'Robert N', 'Lars K', 'Joakim R', 'Benjamin R', 'Marie E', 'Maria GN',
                'Axel B', 'Amin E-R', 'André H', 'Carl Å', 'Christian B', 'Katarina C',
                'Erica G', 'Jeremy D', 'Kristjan F', 'Mathias K', 'Signe B', 'Staffan M',
-               'Victor O'];
+               'Victor O', 'Max S', 'Johannes T', 'Vincent K'];
 asort($classMates);
 
 if (isset($_POST['numPlayers'])) {
