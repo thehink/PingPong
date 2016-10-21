@@ -38,17 +38,3 @@ include_once('includes/database.php');
       <?php endif; ?>
 
       </section>
-			<?php
-
-      /*
-			include 'scoreSheetFunctions.php';
-			include 'gameOn.php';
-			$scores = getScores();
-
-			if (!empty($scores)) {
-				foreach ($scores as $key => $value) {
-					echo '<button>'.$key.'</button>';
-				}
-			}*/
-
-			?>
