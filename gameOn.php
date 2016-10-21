@@ -4,11 +4,12 @@
   <head>
     <meta charset="utf-8">
     <title>Game ON!</title>
+    <link rel="stylesheet" href="/css/style.css" media="screen" title="no title">
   </head>
   <body>
-    <?php if(isset($_POST['names'])): ?>
+    <?php if(isset($_POST['start'])): ?>
     <header>
-      <form class="" action="/startPage.php" method="post">
+      <form class="" action="/" method="post">
         <button type="submit" name="backButton">To main page</button>
       </form>
     </header>
