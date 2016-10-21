@@ -6,18 +6,20 @@
   </head>
   <body>
     <header>
+      <!-- Welcome message at start -->
       <?php if (!isset($_POST['start'])): ?>
-      <h2>Welcome to Ping Pong Score Tracker 3000</h2>
+      <h2>Welcome to Ping Pong Score Master 3000</h2>
       <h3>Press START to begin a new round!</h3>
       <form method="POST">
         <button type="submit" name="start">START</button>
       </form>
     <?php endif; ?>
+
     </header>
     <?php
     include 'scoreSheetFunctions.php';
     include 'gameOn.php';
-    $scores = getScores();
+    $scores = getScores(); // Load scores from external score file. 
 
 
     if (isset($_POST['start'])) {

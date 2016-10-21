@@ -8,7 +8,7 @@
   <body>
     <?php if(isset($_POST['names'])): ?>
     <header>
-      <form class="" action="/scoreSheet.php" method="post">
+      <form class="" action="/startPage.php" method="post">
         <button type="submit" name="backButton">To main page</button>
       </form>
     </header>
