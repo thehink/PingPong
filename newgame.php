@@ -13,7 +13,7 @@ include_once('includes/database.php');
 					</form>
 
 
-      <?php if(isset($_POST['playCount'])){
+      <?php if(isset($_POST['playCount'])):
 
         //cast playCount to int to make sure its an integer
         //could add more checks on playerCount. Like a check for negative and too high numbers
@@ -24,24 +24,20 @@ include_once('includes/database.php');
           <label for="playCount" class="label">Enter player names</label>
           <input type="hidden" name="gameOn" value="1">
           <input type="hidden" name="playerCount" value="<?=$playerCount?>">
-          <?php for($i = 0; $i < $playerCount; $i++) { ?>
+          <?php for($i = 0; $i < $playerCount; $i++): ?>
             <label for="players[]" class="label">Player <?=($i+1)?></label>
             <select name="players[]">
-              <?php foreach($playerNames as $player) { ?>
+              <?php foreach($playerNames as $player): ?>
                 <option value="<?=$player['id']?>"><?=$player['name']?></option>
-              <?php } ?>
+              <?php endforeach; ?>
             </select>
-          <?php } ?>
+          <?php endfor; ?>
           <button type="submit">NEW ROUND</button>
         </form>
 
-      <?php } ?>
+      <?php endif; ?>
 
       </section>
-
-			<footer>
-				<!-- Add leader board -->
-			</footer>
 			<?php
 
       /*
