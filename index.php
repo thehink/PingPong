@@ -29,12 +29,6 @@
 			include 'gameOn.php';
 			$scores = getScores();
 
-
-			if (isset($_POST['start'])) {
-				echo 'How many players? <form method="POST" action="names.php"><input type="number" name="numPlayers"><br><br></input><button>submit</button></form>';
-			}
-
-
 			if (!empty($scores)) {
 				foreach ($scores as $key => $value) {
 					echo '<button>'.$key.'</button>';
