@@ -21,7 +21,7 @@
 
 
     if (isset($_POST['start'])) {
-      echo 'How many players? <form method="POST" action="/names.php"><input type="number" name="numPlayers"></input><button>submit</button></form>';
+      echo 'How many players? <form method="POST" action="names.php"><input type="number" name="numPlayers"></input><button>submit</button></form>';
     }
 
 
@@ -34,6 +34,3 @@
     ?>
   </body>
 </html>
-
-
-
