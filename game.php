@@ -23,17 +23,17 @@ foreach ($playerIds as $key => $id) {
   $isBlank = (int)$id === 0;
 
   if(!$playerExists){
-    $errors['players'][$key] = 'Doesnt exist in database!';
+    $errors['players'][$key] = '<span class="nameFieldErrorMessage">Doesnt exist in database!</span><br><br>';
   }
 
   if ($duplicates)
   {
-    $errors['players'][$key] = 'Player is a duplicate!';
+    $errors['players'][$key] = '<span class="nameFieldErrorMessage">Player is a duplicate!</span><br><br>';
   }
 
   if ($isBlank)
   {
-    $errors['players'][$key] = 'You need to choose a player!';
+    $errors['players'][$key] = '<span class="nameFieldErrorMessage">You need to choose a player!</span><br><br>';
   }
 }
 
