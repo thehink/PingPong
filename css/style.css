@@ -44,7 +44,21 @@ button:hover {
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
+.mainContent:nth-child(2) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
+.mainContent select {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mainContent {
+    display: flex;
+    flex-wrap: wrap;
+}
 /*Layout*/
 .mainWrapper {
 	max-width: 750px;
@@ -53,6 +67,7 @@ button:hover {
 	background: #fff;
 	padding: 50px;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
