@@ -15,6 +15,23 @@ $playerCount = (int)$_POST['playerCount'];
 //This should be keepen track of in the database in the future
 $players = Database::getPlayersByIds($playerIds);
 
+foreach ($playerIds as $key => $id) {
+  $playerExists = is_numeric(array_search($id, array_column($players, 'id')));
+  $duplicates = count(array_keys($playerIds, $id)) > 1;
+  //the blank name has an id of 0
+  $isBlank = (int)$id === 0;
+
+  if(!$playerExists){
+    echo "A player you chose doesn't exist in database!";
+    return;
+  }
+
+  if ($duplicates || $isBlank)
+  {
+    echo "You cant have blank or duplicate names!";
+    return;
+  }
+}
 
 //player clicked a name so we should add the score and remove player from array
 if(isset($_POST['addScore'])){
