@@ -26,6 +26,11 @@ h2 {
 h2 span {
 	font-size: 170px;
 }
+h3 {
+	text-align: center;
+	width: 100%;
+	margin-top: 25px;
+}
 /*
 Set players button
 
