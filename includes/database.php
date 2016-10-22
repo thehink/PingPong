@@ -34,7 +34,10 @@ class Database{
     $selectedNames = [];
 
     foreach ($arr as $i => $id) {
-      array_push($selectedNames, $names[$id]);
+      if(array_key_exists($id, $names)){
+        array_push($selectedNames, $names[$id]);
+      }
+
     }
     return $selectedNames;
   }
