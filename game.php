@@ -14,6 +14,7 @@ $playerCount = (int)$_POST['playerCount'];
 //get the players by the ids supplied in the post request.
 //This should be keepen track of in the database in the future
 $players = Database::getPlayersByIds($playerIds);
+$errors = ['players'=> []];
 
 foreach ($playerIds as $key => $id) {
   $playerExists = is_numeric(array_search($id, array_column($players, 'id')));
@@ -22,15 +23,25 @@ foreach ($playerIds as $key => $id) {
   $isBlank = (int)$id === 0;
 
   if(!$playerExists){
-    echo "A player you chose doesn't exist in database!";
-    return;
+    $errors['players'][$key] = 'Doesnt exist in database!';
   }
 
-  if ($duplicates || $isBlank)
+  if ($duplicates)
   {
-    echo "You cant have blank or duplicate names!";
-    return;
+    $errors['players'][$key] = 'Player is a duplicate!';
   }
+
+  if ($isBlank)
+  {
+    $errors['players'][$key] = 'You need to choose a player!';
+  }
+}
+
+//stop execution of this if errors found
+if(count($errors['players']) > 0){
+  //the variable $errors will now be defined in newgame.php so we can check for errors there
+  include('newgame.php');
+  return;
 }
 
 //player clicked a name so we should add the score and remove player from array
