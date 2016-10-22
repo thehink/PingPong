@@ -26,15 +26,16 @@ h2 {
 h2 span {
 	font-size: 170px;
 }
+/* "button" Set players button*/
 button {
 	background: #17bba8;
-	border: 5px solid #17bba8;
+	border: 2px solid #17bba8;
 	padding: 10px 15px;
 	font-family: 'Coda', sans-serif;
 	font-weight: 800;
 	font-size: 24px;
 	color: #fff;
-	border-radius: 15px;
+	border-radius: 5px;
 }
 button:hover {
 	background: #fff;
@@ -59,6 +60,23 @@ header {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+}
+/* "header a" home and scoreboard links at the bottom of the header */
+header a {
+	margin: 15px;
+	background: #17bba8;
+	border: 2px solid #17bba8;
+	padding: 5px;
+	font-family: 'Coda', sans-serif;
+	color: #fff;
+	border-radius: 5px;
+}
+header a:hover {
+	background: #fff;
+	color: #17bba8;
+	cursor: pointer;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 footer {
 	width: 100%;
