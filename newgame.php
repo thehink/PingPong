@@ -8,7 +8,6 @@ include_once('includes/database.php');
 						<label for="playCount" class="label">How many players?</label>
 						<input type="number" name="playCount" value="<?=$_POST['playCount']?>">
 						<label for="playerName" class="label"></label>
-						<!-- Select boxes -->
 						<button type="submit" name="start">Set Players</button>
 					</form>
 
