@@ -26,6 +26,7 @@ h2 {
 h2 span {
 	font-size: 170px;
 }
+/* "button" Set players button*/
 button {
 	background: #17bba8;
 	border: 5px solid #17bba8;
@@ -60,6 +61,7 @@ header {
 	flex-wrap: wrap;
 	justify-content: center;
 }
+/* "header a" home and scoreboard links at the bottom of the header */
 header a {
 	margin: 15px;
 	background: #17bba8;
