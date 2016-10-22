@@ -14,9 +14,9 @@ if($playerCount > count($players)){
   ];
 }
 
-if($playerCount < 0){
+if($playerCount < 1){
   $errors = [
-    'playerCount' => 'You cant have less than 0 players :/'
+    'playerCount' => 'You cant have less than 1 players :/'
   ];
 }
 
