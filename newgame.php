@@ -35,7 +35,7 @@ include_once('includes/database.php');
             $errorExists = isset($errors) && isset($errors['players']) && isset($errors['players'][$i]);
             ?>
             <label for="players[]" class="label">Player <?=($i+1)?></label>
-            <select name="players[]" selected="2">
+            <select name="players[]">
               <?php foreach($playerNames as $player): ?>
                 <option <?=isset($playerArray[$i]) && $player['id'] == $playerArray[$i] ? 'selected="selected"' : ''?> value="<?=$player['id']?>"><?=$player['name']?></option>
               <?php endforeach; ?>
