@@ -1,32 +1,15 @@
 <?php
-include_once('includes/score.php');
-?>
+require_once('lib/header.php');
+require_once('lib/game.php');
 
-<?php include('header.php'); ?>
+$results = [];
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Points</th>
-    <th>Wins</th>
-    <th>Games</th>
-  </tr>
-
-<?php
-
-//get scores => format => ['Benjamin R' => ['score' => 2, 'wins' => 3]
-$scores = Score::GetScores();
-
-foreach ($scores as $id => $score) {
-  echo '<tr>';
-  echo '<td>'. $score['name'] . '</td>';
-  echo '<td>'. $score['score'] . '</td>';
-  echo '<td>'. $score['wins'] . '</td>';
-  echo '<td>'. $score['games'] . '</td>';
-  echo '</tr>';
+if(isset($_GET['game_id'])){
+  $gameId = (int)$_GET['game_id'];
+  $game = new PingPongGame($gameId);
+  $results = $game->getResults();
 }
- ?>
 
-</table>
-
-<?php include('footer.php'); ?>;
+include('template/header.php');
+include('template/scoreboard.php');
+include('template/footer.php');

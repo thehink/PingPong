@@ -1,92 +1,63 @@
 <?php
+require_once('lib/header.php');
+require_once('lib/game.php');
 
-if(!isset($_POST['gameOn']) || !isset($_POST['players'])){
-  echo 'Why you here?';
-  exit;
+$results = [];
+$players = [];
+
+if(isset($_SESSION['new_game']) && $_SESSION['new_game']){
+  $_SESSION['new_game'] = NULL;
+  $selectedPlayers = $_SESSION['players']; //players were validated in index.php
+  $name = 'PingPong Game';  //could make this an input in index.php
+  $game = new PingPongGame(NULL, $name, $selectedPlayers);
+  $_SESSION['game_id'] = $game->gameId;
+  $players = $game->getPlayers();
 }
 
-include_once('includes/database.php');
-include_once('includes/score.php');
-
-$playerIds = $_POST['players'];
-$playerCount = (int)$_POST['playerCount'];
-
-//get the players by the ids supplied in the post request.
-//This should be keepen track of in the database in the future
-$players = Database::getPlayersByIds($playerIds);
-$errors = ['players'=> []];
-
-foreach ($playerIds as $key => $id) {
-  $playerExists = is_numeric(array_search($id, array_column($players, 'id')));
-  $duplicates = count(array_keys($playerIds, $id)) > 1;
-  //the blank name has an id of 0
-  $isBlank = (int)$id === 0;
-
-  if(!$playerExists){
-    $errors['players'][$key] = '<span class="nameFieldErrorMessage">Doesnt exist in database!</span><br><br>';
-  }
-
-  if ($duplicates)
-  {
-    $errors['players'][$key] = '<span class="nameFieldErrorMessage">Player is a duplicate!</span><br><br>';
-  }
-
-  if ($isBlank)
-  {
-    $errors['players'][$key] = '<span class="nameFieldErrorMessage">You need to choose a player!</span><br><br>';
-  }
+if(isset($_SESSION['game_id'])){
+  $gameId = (int)$_SESSION['game_id'];
+  $game = new PingPongGame($gameId);
+  $players = $game->getPlayers();
 }
 
-//stop execution of this if errors found
-if(count($errors['players']) > 0){
-  //the variable $errors will now be defined in newgame.php so we can check for errors there
-  include('newgame.php');
-  return;
-}
+if(isset($_POST['new_round'])){
+  $eliminatedPlayerId = (int)$_POST['eliminated_player'];
 
-//player clicked a name so we should add the score and remove player from array
-if(isset($_POST['addScore'])){
-  //get the index of the player who lost
-  $playerIndex = (int)$_POST['addScore'];
-  $player = $players[$playerIndex];
+  //eliminate player
+  $game->eliminatePlayer($eliminatedPlayerId);
 
-//remove the player who lost from the current tables of players
-  array_splice($playerIds, $playerIndex, 1);
-  array_splice($players, $playerIndex, 1);
+  //get players left in the game
+  $players = $game->getPlayers();
 
-//normal score (TotalPlayerCount - PlayersLeft) * 10
-  $score = ($playerCount - count($players)) * 10;
-
-//only 1 player left in array of players. So that player has to be the winner.
   if(count($players) === 1){
-    $winner = $players[0];
-    $winnerScore = $score + 30; //bonus score for winner is defined here
-    echo "Wohooo " . $winner['name'] . " has won<br>";
-    echo $winner['name'] . '(winner) got ' . $winnerScore . ' points<br>';
+    //only 1 left. that means someone won
 
-    //add score of winner
-    Score::addScore($winner, $winnerScore, 1);
+    //call are game class to wrap things up
+    $game->playerWin();
 
-    //add score for second place
-    Score::addScore($player, $score, 0);
-    $players = [];
+    //unset game_id because the game session is over.
+    //session[players] is still available we can make use of it by starting a new game with the same players
+    unset($_SESSION['game_id']);
+
+    //these variables are needed for the template game.php
+    $playerWon = true;
+    $victoriousPlayer = $players[0];  //the last player must be the winner right?
+    $players = $game->getPlayers();
+
+    //rederict player to scoreboard of this game
+    header('Location: scoreboard.php?game_id=' . $game->gameId);
+    exit;
   }
 
-  //add score for any other place
-  Score::addScore($player, $score, 0);
-  echo $player['name'] . ' got ' . $score . ' points for ' . (count($playerIds)+1) . ' place<br>';
-} ?>
+  //make the $results variable available for the results.php template
+}
 
-<h3 class="gameHeader">Click name if you are OUT</h3>
-<?php foreach ($players as $i => $player) {?>
-  <form class="" action="index.php" method="post">
-    <input type="hidden" name="gameOn" value="1">
-    <input type="hidden" name="playerCount" value="<?=$playerCount?>">
-    <input type="hidden" name="addScore" value="<?=$i?>">
-    <?php foreach ($players as $i2 => $player2) { ?>
-    <input type="hidden" name="players[]" value="<?=$player2['id']?>">
-    <?php } ?>
-    <button type="submit"><?=$player['name']?></button>
-  </form>
+if(isset($game)){
+  $results = $game->getResults();
+}
 
-<?php } ?>
+
+include('template/header.php');
+include('template/game.php');
+include('template/scoreboard.php');
+include('template/footer.php');
