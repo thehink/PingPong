@@ -77,7 +77,7 @@ if(isset($_POST['addScore'])){
   echo $player['name'] . ' got ' . $score . ' points for ' . (count($playerIds)+1) . ' place<br>';
 } ?>
 
-<h3>Click name if you are OUT</h3>
+<h3 class="gameHeader">Click name if you are OUT</h3>
 <?php foreach ($players as $i => $player) {?>
   <form class="" action="index.php" method="post">
     <input type="hidden" name="gameOn" value="1">
