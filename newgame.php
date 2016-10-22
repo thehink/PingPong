@@ -29,7 +29,8 @@ include_once('includes/database.php');
         <form method="POST" action="index.php">
           <label for="playCount" class="label">Enter player names</label>
           <input type="hidden" name="gameOn" value="1">
-          <input type="hidden" name="playerCount" value="<?=$playerCount?>">
+          <input id="playerCount" type="hidden" name="playerCount" value="<?=$playerCount?>">
+          <div id="selectContainer"></div> <!-- container for js form generation -->
           <?php for($i = 0; $i < $playerCount; $i++):
             //if we got an error the variable $error will defined in game.php and included here
             $errorExists = isset($errors) && isset($errors['players']) && isset($errors['players'][$i]);
