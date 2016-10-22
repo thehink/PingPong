@@ -3,6 +3,10 @@
 1. Edit ```lib/config.php``` to reflect your mysql settings.
 1. Enjoy Ping Pong Score Master 3000!
 
+## Tips
+* Reset all scores by browsing to ```reset.php``` BEWARE, All score DATA will be deleted!!!
+* Add more names by adding a line in names.txt and then browsing to ```importnames.php``` or simply add them manually to database
+
 # The what
 
 The goal of this project is to create a **Ping Pong** ranking system for
