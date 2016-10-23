@@ -71,7 +71,10 @@ function onPlayerCountSubmit(event){
 
 	//insert after playerCount form
 	playCount.parentNode.insertBefore(node, playCount.nextSibling);
-	rebuildOptions();
+
+	if(!error){
+		rebuildOptions();
+	}
 }
 
 function buildPlayerOptions(playerCount){
