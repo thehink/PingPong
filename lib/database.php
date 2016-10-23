@@ -1,5 +1,6 @@
 <?php
 require("config.php");
+require("utils.php");
 
 class Database{
 
@@ -53,10 +54,7 @@ class Database{
   }
 
   public static function getPlayers($players){
-    $in = array_map(function($id){
-      return (int)$id;
-    }, $players);
-    $in = join(', ', $in);
+    $in = utils::array_join_int($players, ', ');
 
     return self::fetchAll('
       SELECT
@@ -131,6 +129,18 @@ class Database{
       WHERE id = :id',
     [
       'id' => $playerId,
+      'game_id' => $gameId
+    ]);
+  }
+
+  public static function updatePlayers($playerIds, $gameId){
+    $in = utils::array_join_int($playerIds, ', ');
+
+    return self::query('
+      UPDATE players
+      SET game_id = :game_id
+      WHERE id IN (' . $in . ')',
+    [
       'game_id' => $gameId
     ]);
   }

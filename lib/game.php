@@ -7,7 +7,7 @@ class PingPongGame{
   private $gameInfo;
   private $players = [];
 
-  function __construct($gameId = NULL, $name = '', $players = []) {
+  function __construct($gameId = NULL, $name = '', $playerIds = []) {
     $this->gameId = $gameId;
 
     if($this->gameId !== NULL){
@@ -16,11 +16,9 @@ class PingPongGame{
         throw new Exception('This game doesnt exist in database!');
       }
     }else{
-      $this->gameId = Database::addGame($name, count($players));
+      $this->gameId = Database::addGame($name, count($playerIds));
       $this->gameInfo = Database::getGame($this->gameId);
-      foreach ($players as $playerId) {
-        $this->addPlayer($playerId);
-      }
+      $this->addPlayers($playerIds);
       $this->getPlayers();
     }
   }
@@ -28,6 +26,14 @@ class PingPongGame{
   function getPlayers(){
     $this->players = Database::getPlayersByGame($this->gameId);
     return $this->players;
+  }
+
+
+//mass player add
+  function addPlayers($playerIds){
+    $this->gameInfo['participants'] += count($playerIds);
+    $result = Database::updatePlayers($playerIds, $this->gameId);
+    return $result;
   }
 
   function addPlayer($playerId){
