@@ -71,12 +71,6 @@ function buildPlayerOptions(playerCount){
 	form.method = 'POST';
 	form.action = 'index.php';
 
-	const label = document.createElement('label');
-	label.className = 'label';
-	label.innerText = 'Enter player names';
-
-	//form.appendChild(label);
-
 	for(let i = 0; i < playerCount; ++i){
 		let selectLabel = document.createElement('label');
 		selectLabel.innerText = 'Player ' + (i+1);
