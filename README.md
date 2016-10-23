@@ -1,7 +1,16 @@
+# Setup
+1. Import ```pingpong.sql``` into your mysql database
+1. Edit ```lib/config.php``` to reflect your mysql settings.
+1. Enjoy Ping Pong Score Master 3000!
+
+## Tips
+* Reset all scores by browsing to ```reset.php``` BEWARE, All score DATA will be deleted!!!
+* Add more names by adding a line in names.txt and then browsing to ```importnames.php``` or simply add them manually to database
+
 # The what
 
 The goal of this project is to create a **Ping Pong** ranking system for
-the WU16 class at Yrgo. 
+the WU16 class at Yrgo.
 
 # The how
 
@@ -14,7 +23,7 @@ The first player to get 'Tre prickar' will then go click the button with hens na
 The second player to lose will receive 2 points when clicking hens button and so on.
 The winner of the round will recieve 1 point for each player participating plus an additional 2 points for being awesome.
 
-Feel free to pitch in with anything you want. 
+Feel free to pitch in with anything you want.
 
 Missing a feature? - **Add it**
 
