@@ -37,7 +37,7 @@ function onPlayerCountSubmit(event){
 	playerCount = playCount.querySelector('input').value;
 
 	//reset selected options
-	selectedOptions = {};
+	//selectedOptions = {};
 
 //define error variable
 	let error;
@@ -71,6 +71,7 @@ function onPlayerCountSubmit(event){
 
 	//insert after playerCount form
 	playCount.parentNode.insertBefore(node, playCount.nextSibling);
+	rebuildOptions();
 }
 
 function buildPlayerOptions(playerCount){
