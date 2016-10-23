@@ -2,6 +2,7 @@
 'use strict';
 //print out the players from php
 const players = <?=json_encode($players)?>;
+const selectedPlayers = <?=isset($_SESSION['players']) ? json_encode($_SESSION['players']) : '[]' ?>
 </script>
 <section class="mainContent">
 					<form method="POST" action="index.php" id="playerCountForm">
