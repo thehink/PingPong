@@ -34,8 +34,14 @@ if(isset($_SESSION['game_id'])){
 }
 
 //if someone clicked a name it will send a post request to this page with the variable new_round
-if(isset($_POST['new_round'])){
+if(isset($game) && isset($_POST['new_round'])){
   $eliminatedPlayerId = (int)$_POST['eliminated_player'];
+
+  $playerStillInGame = in_array($eliminatedPlayerId, array_column($players, 'id'));
+
+  if(!$playerStillInGame){
+    throw new Exception("Error, this player is not in the game anymore!");
+  }
 
   //eliminate player
   $game->eliminatePlayer($eliminatedPlayerId);
