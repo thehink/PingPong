@@ -14,7 +14,7 @@ if($playerCount > count($players)){
   ];
 }
 
-if($playerCount < 2){
+if(isset($_POST['playerCount']) && $playerCount < 2){
   $errors = [
     'playerCount' => 'You cant have less than 1 players :/'
   ];
