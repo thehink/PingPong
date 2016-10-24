@@ -46,6 +46,13 @@ input[type="number"] {
 	width: 70px;
 	margin: 0 40%;
 }
+.selectBox {
+	width: 190px;
+	margin: 5px 20px;
+	font-size: 18px;
+	padding: 5px;
+	border-radius: 5px;
+}
 
 /* "button" Set players button*/
 button {
