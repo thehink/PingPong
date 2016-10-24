@@ -52,14 +52,14 @@ class PingPongGame{
     $this->getPlayers();
     $playerCount = count($this->players);
     $place = $playerCount;
-    $points = ($this->gameInfo['participants'] - $playerCount + 1) * GAME_SCORE_MULTIPLIER;
+    $points = ceil(($this->gameInfo['participants'] - $playerCount + 1) * GAME_SCORE_MULTIPLIER);
     $this->removePlayer($playerId);
     Database::addGameResult($this->gameId, $playerId, $points, $place);
   }
 
   function playerWin(){
     $this->getPlayers();
-    $points = $this->gameInfo['participants'] * GAME_SCORE_MULTIPLIER + GAME_WIN_BONUS;
+    $points = ceil($this->gameInfo['participants'] * GAME_SCORE_MULTIPLIER * GAME_WIN_BONUS_MULTIPLIER);
     Database::addGameResult($this->gameId, $this->players[0]['id'], $points, 1);
     Database::updateGame($this->gameId, time());
     $this->removePlayer($this->players[0]['id']);
