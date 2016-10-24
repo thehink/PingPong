@@ -136,7 +136,10 @@ function rebuildOptions(){
 
 	//push all selected players to the usedPlayers array
 		for(let key in selectedOptions){
-			usedPlayers.push(parseInt(selectedOptions[key].id));
+			let numPlayer = parseInt(key.replace('player',''));
+			if(numPlayer <= playerCount){
+				usedPlayers.push(parseInt(selectedOptions[key].id));
+			}
 		}
 
 	//loop through all select boxes
