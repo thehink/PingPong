@@ -85,8 +85,6 @@ function buildPlayerOptions(playerCount){
 	form.action = 'index.php';
 
 	for(let i = 0; i < playerCount; ++i){
-		let selectLabel = document.createElement('label');
-		selectLabel.innerText = 'Player ' + (i+1);
 
 		let select = document.createElement('select');
 		select.className = 'selectBox';
@@ -95,7 +93,6 @@ function buildPlayerOptions(playerCount){
 
 		let option = document.createElement('option');
 		option.value = -1;
-		option.innerText = 'Select player...';
 		select.appendChild(option);
 
 		for(let j = 0; j < players.length; ++j){
@@ -107,7 +104,6 @@ function buildPlayerOptions(playerCount){
 
 		select.addEventListener('change', onOptionChange);
 
-		form.appendChild(selectLabel);
 		form.appendChild(select);
 
 	}

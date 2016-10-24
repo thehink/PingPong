@@ -6,7 +6,7 @@ const selectedPlayers = <?=isset($_SESSION['players']) ? json_encode($_SESSION['
 </script>
 <section class="mainContent">
 					<form method="POST" action="index.php" id="playerCountForm">
-						<label for="playCount" class="label">How many players?</label>
+						<h3 class="playerCountHeader">How many players?</h3>
 						<input type="number" name="playerCount" value="<?=$playerCount?>">
             <?=isset($errors) && isset($errors['playerCount']) ? '<span class="nameFieldErrorMessage">'.$errors['playerCount'].'</span>' : ''?>
 						<label for="playerName" class="label"></label>

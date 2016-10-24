@@ -26,9 +26,29 @@ h2 {
 h2 span {
 	font-size: 170px;
 }
+h3 {
+	width: 100%;
+	margin: 25px 0 15px 0;
+	font-size: 20px;
+}
+
+/*Form styles*/
+form {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+input[type="number"] {
+	border-radius: 10px;
+	font-size: 24px;
+	padding: 10px;
+	width: 70px;
+}
+
 /* "button" Set players button*/
 button {
-	margin: 20px auto;
+	margin: 20px 40%;
   font-weight: bold;
   font-size: 14px;
 	background: #17bba8;
