@@ -10,5 +10,8 @@
 			<header>
 				<h2>Ping Pong Score Master <br><span>3000</span></h2>
         <a href="index.php">Home</a>
+        <?php if(isset($_SESSION['game_id'])): ?>
+          <a href="game.php">Game In Progress</a>
+        <? endif;?>
         <a href="leaderboard.php">Leaderboard</a>
 			</header>

@@ -5,21 +5,26 @@ require_once('lib/header.php');
 
 //$players will be in the scope of all the included files below
 $players = Database::getAllPlayers();
-$playerCount = isset($_POST['playerCount']) ? $_POST['playerCount'] : 0;
+//get post variable player count or set it to 2 as default
+$playerCount = isset($_POST['playerCount']) ? $_POST['playerCount'] : 2;
+//selectedPlayers in array of ids => [1,2,3,4] empty as default
 $selectedPlayers = isset($_POST['selectedPlayers']) ? $_POST['selectedPlayers'] : [];
 
+//check so we dont have a too high playercount
 if($playerCount > count($players)){
   $errors = [
     'playerCount' => 'Too many players, Max ' . count($players) . ' players!'
   ];
 }
 
-if($playerCount < 2){
+//check so we dont have a too low playercount
+if(isset($_POST['playerCount']) && $playerCount < 2){
   $errors = [
     'playerCount' => 'You cant have less than 1 players :/'
   ];
 }
 
+//if we got selected
 if(count($selectedPlayers) > 0 && !isset($errors['playerCount'])){
   $errors = ['players'=> []];
   foreach ($selectedPlayers as $i => $id) {
@@ -39,19 +44,24 @@ if(count($selectedPlayers) > 0 && !isset($errors['playerCount'])){
       $errors['players'][$i] = 'You need to choose a player!';
     }
   }
+
+  //if we didnt found any errors they most be valid
   if(count($errors['players']) === 0){
     $_SESSION['players'] = $selectedPlayers;
     $_SESSION['new_game'] = true;
+
+    //rederict to our game page with session variables above
     header('Location: game.php');
     exit;
   }
 }
 
-
+//show our templates
+//the variables defined above will be in the scope of the templates
 include('template/header.php');
 include('template/playerCount.php');
 
-//show player dropdowns if we got a playerCount post
+//show player dropdowns if we got a playerCount post and dont have any playerCount errors
 if(isset($_POST['playerCount']) && !isset($errors['playerCount'])){
   include('template/choosePlayers.php');
 }

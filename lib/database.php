@@ -1,5 +1,6 @@
 <?php
 require("config.php");
+require("utils.php");
 
 class Database{
 
@@ -42,20 +43,39 @@ class Database{
   }
 
   public static function getAllPlayers(){
-    return self::fetchAll('SELECT id, username, firstname, lastname, game_id FROM players');
+    return self::fetchAll('
+      SELECT
+        id,
+        username,
+        firstname,
+        lastname,
+        game_id
+      FROM players');
   }
 
   public static function getPlayers($players){
-    $in = array_map(function($id){
-      return (int)$id;
-    }, $players);
-    $in = join(', ', $in);
+    $in = utils::array_join_int($players, ', ');
 
-    return self::fetchAll('SELECT username, firstname, lastname, game_id FROM players WHERE id IN (' . $in . ')');
+    return self::fetchAll('
+      SELECT
+        username,
+        firstname,
+        lastname,
+        game_id
+      FROM players
+      WHERE id IN (' . $in . ')');
   }
 
   public static function getPlayersByGame($gameId){
-    return self::fetchAll('SELECT id, username, firstname, lastname, game_id FROM players WHERE game_id = :game_id',
+    return self::fetchAll('
+      SELECT
+        id,
+        username,
+        firstname,
+        lastname,
+        game_id
+      FROM players
+      WHERE game_id = :game_id',
     [
       'game_id' => $gameId
     ]);
@@ -63,14 +83,29 @@ class Database{
 
 
   public static function getGame($gameId){
-    return self::fetch('SELECT id, name, date_started, date_ended, participants FROM games WHERE id = :id LIMIT 1',
+    return self::fetch('
+      SELECT
+        id,
+        name,
+        date_started,
+        date_ended,
+        participants
+      FROM games
+      WHERE id = :id LIMIT 1',
     [
       'id' => $gameId
     ]);
   }
 
   public static function addGame($name, $participants){
-    return self::insert('INSERT INTO games (name, participants) VALUES (:name, :participants)',
+    return self::insert('
+    INSERT INTO games (
+      name,
+      participants
+    ) VALUES (
+      :name,
+      :participants
+    )',
     [
       'name' => $name,
       'participants' => $participants
@@ -78,22 +113,51 @@ class Database{
   }
 
   public static function updateGame($gameId, $time){
-    return self::query('UPDATE games SET date_ended = NOW() WHERE id = :id',
+    return self::query('
+      UPDATE games
+      SET date_ended = NOW()
+      WHERE id = :id',
     [
       'id' => $gameId
     ]);
   }
 
   public static function updatePlayer($playerId, $gameId){
-    return self::query('UPDATE players SET game_id = :game_id WHERE id = :id',
+    return self::query('
+      UPDATE players
+      SET game_id = :game_id
+      WHERE id = :id',
     [
       'id' => $playerId,
       'game_id' => $gameId
     ]);
   }
 
+  public static function updatePlayers($playerIds, $gameId){
+    $in = utils::array_join_int($playerIds, ', ');
+
+    return self::query('
+      UPDATE players
+      SET game_id = :game_id
+      WHERE id IN (' . $in . ')',
+    [
+      'game_id' => $gameId
+    ]);
+  }
+
   public static function addGameResult($gameId, $playerId, $points, $place){
-    return self::insert('INSERT INTO results (game_id, player_id, points, place) VALUES (:game_id, :player_id, :points, :place)',
+    return self::insert('
+      INSERT INTO results (
+        game_id,
+        player_id,
+        points,
+        place
+      ) VALUES (
+        :game_id,
+        :player_id,
+        :points,
+        :place
+      )',
     [
       'game_id' => $gameId,
       'player_id' => $playerId,

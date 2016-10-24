@@ -1,6 +1,7 @@
 # Setup
+1. Create a mysql database called pingpong
 1. Import ```pingpong.sql``` into your mysql database
-1. Edit ```lib/config.php``` to reflect your mysql settings.
+1. Edit ```lib/config.php``` to reflect your mysql settings. If you're using default settings for mamp this is unnecessary.
 1. Enjoy Ping Pong Score Master 3000!
 
 ## Tips
