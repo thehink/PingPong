@@ -1,6 +1,6 @@
 <section class="mainContent">
   <form method="POST" action="index.php">
-          <label for="playCount" class="label">Enter player names</label>
+          <h3 class="playerNamesHeader">Enter player names</h3>
           <input id="playerCount" type="hidden" name="playerCount" value="<?=$playerCount?>">
           <div id="selectContainer"></div> <!-- container for js form generation -->
           <?php for($i = 0; $i < $playerCount; $i++):
