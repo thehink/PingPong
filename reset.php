@@ -8,5 +8,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Yes'])) {
   Database::query('DELETE FROM results');
   echo "Done!";
 }
-
-
