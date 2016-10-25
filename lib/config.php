@@ -5,4 +5,6 @@ const DB_USER = "root";
 const DB_PASSWORD = "root";
 
 const GAME_SCORE_MULTIPLIER = 1;
-const GAME_WIN_BONUS_MULTIPLIER = 2;
+const GAME_WIN_BONUS_MULTIPLIER = 1.5;
+
+const PIN_CODE = 'WU16';
