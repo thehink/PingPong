@@ -1,5 +1,8 @@
 <?php
 require_once('lib/header.php');
+require_once('lib/game.class.php');
+
+$game = Game::getGameInProgress();
 
 if(isset($_POST['pin'])){
   //Try to auth
@@ -17,5 +20,12 @@ if(isset($_POST['pin'])){
 }
 
 include('template/header.php');
+
+
+if($game){
+  $results = $game->getResults();
+  include('template/scoreboard.php');
+}
+
 include('template/login.php');
 include('template/footer.php');
