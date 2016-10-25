@@ -7,14 +7,15 @@
     </tr>
 
   <?php
-
   foreach ($results as $i => $player) {
-    echo '<tr>';
-    echo '<td>'. $player['place'] . '</td>';
-    echo '<td>'. $player['firstname'] . ' ' . mb_substr($player['lastname'],0,1) . '</td>';
-    echo '<td>'. $player['points'] . '</td>';
-    echo '</tr>';
+    $row = '<tr>';
+    $row .= sprintf('<td>%s</td>', $player['place']);
+    $row .= sprintf('<td>%s %s</td>', $player['firstname'], mb_substr($player['lastname'],0,1));
+    $row .= sprintf('<td>%s</td>', $player['points']);
+    $row .= '</tr>';
+    echo $row;
   }
+
    ?>
 
   </table>

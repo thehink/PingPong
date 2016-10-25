@@ -12,14 +12,15 @@
   <?php
 
   foreach ($leaderboard as $i => $player) {
-    echo '<tr>';
-    echo '<td>'. $player['firstname'] . ' ' . mb_substr($player['lastname'],0,1) . '</td>';
-    echo '<td>'. $player['totalScore'] . '</td>';
-    echo '<td>'. $player['gamesPlayed'] . '</td>';
-    echo '<td>'. $player['firstPlace'] . '</td>';
-    echo '<td>'. $player['secondPlace'] . '</td>';
-    echo '<td>'. $player['thirdPlace'] . '</td>';
-    echo '</tr>';
+    $row = '<tr>';
+    $row .= sprintf('<td>%s %s</td>', $player['firstname'], mb_substr($player['lastname'],0,1));
+    $row .= sprintf('<td>%s</td>', $player['totalScore']);
+    $row .= sprintf('<td>%s</td>', $player['gamesPlayed']);
+    $row .= sprintf('<td>%s</td>', $player['firstPlace']);
+    $row .= sprintf('<td>%s</td>', $player['secondPlace']);
+    $row .= sprintf('<td>%s</td>', $player['thirdPlace']);
+    $row .= '</tr>';
+    echo $row;
   }
    ?>
 
