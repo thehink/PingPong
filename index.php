@@ -1,6 +1,11 @@
 <?php
 require_once('lib/header.php');
 
+if(!Auth::authenticated()){
+  include('login.php');
+  exit;
+}
+
 //define variables here that will be accessible in the included files
 
 //$players will be in the scope of all the included files below

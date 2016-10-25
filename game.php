@@ -2,6 +2,11 @@
 require_once('lib/header.php');
 require_once('lib/game.php');
 
+if(!Auth::authenticated()){
+  include('login.php');
+  exit;
+}
+
 $results = [];
 $players = [];
 
