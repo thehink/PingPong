@@ -93,7 +93,7 @@ class Database{
     ]);
   }
 
-  public static function getGameInProgress(){
+  public static function getGamesInProgress(){
     return self::fetch('
       SELECT
         id,
@@ -102,7 +102,23 @@ class Database{
         date_ended,
         participants
       FROM games
-      WHERE date_ended IS NULL LIMIT 1');
+      WHERE date_ended IS NULL');
+  }
+
+  public static function getGames($offset, $limit){
+    return self::fetchAll('
+      SELECT
+        id,
+        name,
+        date_started,
+        date_ended,
+        participants
+      FROM games
+      ORDER BY date_started DESC
+      LIMIT :offset, :limit', [
+        'offset' => $offset,
+        'limit' => $limit
+      ]);
   }
 
 
@@ -140,6 +156,15 @@ class Database{
     return self::query('
       UPDATE games
       SET date_ended = NOW()
+      WHERE id = :id',
+    [
+      'id' => $gameId
+    ]);
+  }
+
+  public static function removeGame($gameId){
+    return self::query('
+      DELETE FROM games
       WHERE id = :id',
     [
       'id' => $gameId
