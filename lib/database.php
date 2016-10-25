@@ -53,6 +53,18 @@ class Database{
       FROM players');
   }
 
+  public static function getAllAvailablePlayers(){
+    return self::fetchAll('
+      SELECT
+        id,
+        username,
+        firstname,
+        lastname,
+        game_id
+      FROM players
+      WHERE game_id IS NULL');
+  }
+
   public static function getPlayers($players){
     $in = utils::array_join_int($players, ', ');
 
@@ -79,6 +91,18 @@ class Database{
     [
       'game_id' => $gameId
     ]);
+  }
+
+  public static function getGameInProgress(){
+    return self::fetch('
+      SELECT
+        id,
+        name,
+        date_started,
+        date_ended,
+        participants
+      FROM games
+      WHERE date_ended IS NULL LIMIT 1');
   }
 
 

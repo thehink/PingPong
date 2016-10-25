@@ -4,8 +4,8 @@ require_once('database.php');
 class PingPongGame{
 
   public $gameId;
-  private $gameInfo;
-  private $players = [];
+  public $gameInfo;
+  public $players = [];
 
   function __construct($gameId = NULL, $name = '', $playerIds = []) {
     $this->gameId = $gameId;
@@ -19,8 +19,46 @@ class PingPongGame{
       $this->gameId = Database::addGame($name, count($playerIds));
       $this->gameInfo = Database::getGame($this->gameId);
       $this->addPlayers($playerIds);
-      $this->getPlayers();
     }
+    $this->getPlayers();
+  }
+
+  function nextRound($eliminatedPlayerId){
+    $eliminatedPlayerId = (int)$eliminatedPlayerId;
+    $playerStillInGame = array_search($eliminatedPlayerId, array_column($this->players, 'id'));
+
+    if(!is_int($playerStillInGame)){
+      throw new Exception("Error, this player is not in the game anymore!");
+    }
+
+    $playerCount = count($this->players);
+
+    if($playerCount > 1){
+      $this->eliminatePlayer($eliminatedPlayerId);
+      array_splice($this->players, $playerStillInGame, 1);
+    }
+
+    if(count($this->players) === 1){
+      $this->gameFinished();
+      return 1;
+    }
+
+    return 0;
+  }
+
+  function eliminatePlayer($playerId){
+    $playerCount = count($this->players);
+    $points = ceil(($this->gameInfo['participants'] - $playerCount + 1) * GAME_SCORE_MULTIPLIER);
+    Database::updatePlayer($playerId, NULL);
+    Database::addGameResult($this->gameId, $playerId, $points, $playerCount);
+  }
+
+  function gameFinished(){
+    $this->getPlayers();
+    $points = ceil($this->gameInfo['participants'] * GAME_SCORE_MULTIPLIER * GAME_WIN_BONUS_MULTIPLIER);
+    Database::addGameResult($this->gameId, $this->players[0]['id'], $points, 1);
+    Database::updateGame($this->gameId, time());
+    Database::updatePlayer($this->players[0]['id'], NULL);
   }
 
   function getPlayers(){
@@ -40,29 +78,6 @@ class PingPongGame{
     $this->gameInfo['participants']++;
     $result = Database::updatePlayer($playerId, $this->gameId);
     return $result;
-  }
-
-  function removePlayer($playerId){
-    $result = Database::updatePlayer($playerId, NULL);
-    $this->getPlayers();
-    return $result;
-  }
-
-  function eliminatePlayer($playerId){
-    $this->getPlayers();
-    $playerCount = count($this->players);
-    $place = $playerCount;
-    $points = ceil(($this->gameInfo['participants'] - $playerCount + 1) * GAME_SCORE_MULTIPLIER);
-    $this->removePlayer($playerId);
-    Database::addGameResult($this->gameId, $playerId, $points, $place);
-  }
-
-  function playerWin(){
-    $this->getPlayers();
-    $points = ceil($this->gameInfo['participants'] * GAME_SCORE_MULTIPLIER * GAME_WIN_BONUS_MULTIPLIER);
-    Database::addGameResult($this->gameId, $this->players[0]['id'], $points, 1);
-    Database::updateGame($this->gameId, time());
-    $this->removePlayer($this->players[0]['id']);
   }
 
   function getResults(){
