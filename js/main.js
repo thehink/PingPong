@@ -13,99 +13,99 @@ const SortedPlayers = players.sort(function(a, b){
   return 0;
 });
 
-let selectedOptions = {};
-let playerCount = selectedPlayers.length || 2;
+selectedPlayers = selectedPlayers.map(function(id){
+  return parseInt(id);
+});
 
+let playerCount = selectedPlayers.length || 2;
+let oldVals = {};
 
 // Get PlayerCount form
 const playCount = document.querySelector("#playerCountForm");
-playCount.querySelector('input').value = playerCount;
+playCount.remove();
 
-if(selectedPlayers.length > 0){
-	selectedPlayers.forEach(function(id, i){
-		selectedOptions['player'+(i+1)] = players.find(function(player){return parseInt(player.id)===parseInt(id)});
-	});
-	playCount.parentNode.insertBefore(buildPlayerOptions(playerCount), playCount.nextSibling);
-	rebuildOptions();
-}
+const wrapper = document.querySelector('#playersFormWrapper');
+//playCount.querySelector('input').value = playerCount;
 
-function onPlayerCountSubmit(event){
-	//prevent submit of playercount
-	event.preventDefault();
 
-	//get value of player count input
-	playerCount = playCount.querySelector('input').value;
+wrapper.appendChild(buildPlayerOptions());
+document.querySelector('.unselected').focus();
 
-	//reset selected options
-	//selectedOptions = {};
+function onPlayerOptionChanged(event){
+  let oldVal = oldVals[event.target.id] || -1;
+  let newVal = parseInt(event.target.value);
+  let oldIndex = selectedPlayers.indexOf(oldVal);
+  if(oldIndex > -1){
+    selectedPlayers.splice(oldIndex, 1);
+  }
 
-//define error variable
-	let error;
-
-//check for errors
-	if(playerCount > SortedPlayers.length){
-		error = 'Max ' + SortedPlayers.length + ' players!';
-	}
-
-	if(playerCount < 2){
-		error = 'Min 2 players!';
-	}
+  if(newVal > -1 && oldIndex > -1){
+    selectedPlayers.splice(oldIndex, 0, newVal);
+  }
+  else if(newVal > -1){
+    selectedPlayers.push(newVal);
+  }
 
 //delete previous nodes
-	const oldNodes = document.querySelectorAll("#playersForm, .nameFieldErrorMessage");
-	if(oldNodes){
-		oldNodes.forEach(function(node){
-			node.remove();
-		});
-	}
+	wrapper.innerHTML = '';
 
-//if errors build a span and display errors or build player select form
-	let node;
-	if(error){
-		node = document.createElement('span');
-		node.className = 'nameFieldErrorMessage';
-		node.innerText = error;
-	}else{
-		node = buildPlayerOptions(playerCount);
-	}
 
+  let node = buildPlayerOptions();
 	//insert after playerCount form
-	playCount.parentNode.insertBefore(node, playCount.nextSibling);
-
-	if(!error){
-		rebuildOptions();
-	}
+  wrapper.appendChild(node);
+  document.querySelector('.unselected').focus();
 }
 
-function buildPlayerOptions(playerCount){
+function buildPlayerOptions(){
+  oldVals = {};
 	//start building form
 	const form = document.createElement('form');
 	form.id = 'playersForm';
 	form.method = 'POST';
 	form.action = 'index.php';
 
-	for(let i = 0; i < playerCount; ++i){
+  let l = selectedPlayers.length < 2 ? 2 : selectedPlayers.length+1;
+
+	for(let i = 0; i < l; ++i){
+    let player = players.find(function(player){
+      return player.id === selectedPlayers[i];
+    });
 
 		let select = document.createElement('select');
 		select.className = 'selectBox';
     select.name = 'selectedPlayers[]';
 		select.id = 'player'+(i+1);
 
-		let option = document.createElement('option');
+
+
+    if(player){
+      oldVals[select.id] = player.id;
+      let option = document.createElement('option');
+			option.value = player.id;
+	    option.innerText = player.firstname;
+			select.appendChild(option);
+    }else{
+      select.className = 'selectBox unselected';
+    }
+
+    let option = document.createElement('option');
 		option.value = -1;
+    option.innerText = 'Select player...';
 		select.appendChild(option);
 
 		for(let j = 0; j < players.length; ++j){
+      if(selectedPlayers.indexOf(players[j].id) > -1){
+        continue;
+      }
 			let option = document.createElement('option');
 			option.value = players[j].id;
 	    option.innerText = players[j].firstname;
 			select.appendChild(option);
 		}
 
-		select.addEventListener('change', onOptionChange);
+		select.addEventListener('change', onPlayerOptionChanged);
 
 		form.appendChild(select);
-
 	}
 
 	let button = document.createElement('button');
@@ -115,78 +115,11 @@ function buildPlayerOptions(playerCount){
 
 	form.addEventListener('submit', function(event){
 		//check to make sure no select is empty
-		for(let i = 0; i < playerCount; ++i){
-			if(!selectedOptions['player' + (i+1)]){
-				alert('You need to select all players!');
-				return event.preventDefault();
-			}
-		}
+		if(selectedPlayers.length < 2){
+      event.preventDefault();
+      alert('You need a minimum of 2 players!');
+    }
 	});
 
 	return form;
 }
-
-function rebuildOptions(){
-	//store all selected player ids here
-		let usedPlayers = [];
-
-	//push all selected players to the usedPlayers array
-		for(let key in selectedOptions){
-			let numPlayer = parseInt(key.replace('player',''));
-			if(numPlayer <= playerCount){
-				usedPlayers.push(parseInt(selectedOptions[key].id));
-			}
-		}
-
-	//loop through all select boxes
-		for(let i = 0; i < playerCount; ++i){
-			const select = document.querySelector("#player" + (i+1));
-			const selectedOption = selectedOptions[select.id];
-
-	//filter out all used players
-			let filteredPlayers = SortedPlayers.filter(function(player){
-				return usedPlayers.indexOf(parseInt(player.id)) === -1;
-			});
-
-	//remove all options
-			while (select.firstChild) {
-			  select.removeChild(select.firstChild);
-			}
-
-	//if we have selected a player for this dropdown previously append it first.
-	//else append a default Select player... option
-			if(selectedOption){
-				let option = document.createElement('option');
-				option.value = selectedOption.id;
-				option.innerText = selectedOption.firstname;
-				select.appendChild(option);
-			}else{
-				let option = document.createElement('option');
-				option.value = -1;
-				option.innerText = 'Select player...';
-				select.appendChild(option);
-			}
-
-	//then add the rest of the filtered players to the dropdown
-			filteredPlayers.forEach(function(player){
-				let option = document.createElement('option');
-				option.value = player.id;
-		    option.innerText = player.firstname;
-				select.appendChild(option);
-			})
-		}
-}
-
-//this is where the magic happens
-function onOptionChange(event){
-	const playerId = parseInt(event.target.value);
-
-//store selected player so we can access it later
-	selectedOptions[event.target.id] = SortedPlayers.find(function(player){
-		return player.id === playerId;
-	});
-
-	rebuildOptions();
-}
-
-playCount.addEventListener('submit', onPlayerCountSubmit);

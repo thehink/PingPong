@@ -2,7 +2,7 @@
   <table class="score-table">
     <tr class="table-header">
       <th>Name</th>
-      <th>Total Score</th>
+      <th>Score</th>
       <th>Games Played</th>
       <th>First Place</th>
       <th>Second Place</th>

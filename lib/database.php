@@ -248,7 +248,9 @@ class Database{
           SUM(CASE WHEN results.place = 3 then 1 else 0 end) as thirdPlace
         FROM results
         INNER JOIN players
-        ON players.id = results.player_id
+          ON players.id = results.player_id
+        INNER JOIN games
+          ON games.id = results.game_id
         GROUP BY results.player_id
         ORDER BY totalScore DESC');
   }

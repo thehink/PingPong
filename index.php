@@ -32,6 +32,11 @@ if(isset($_POST['playerCount']) && $playerCount < 2){
 //if we got selected
 if(count($selectedPlayers) > 0 && !isset($errors['playerCount'])){
   $errors = ['players'=> []];
+
+  $selectedPlayers = array_filter($selectedPlayers, function($id){
+    return $id > -1;
+  });
+
   foreach ($selectedPlayers as $i => $id) {
     $playerExists = is_numeric(array_search($id, array_column($players, 'id')));
     $duplicates = count(array_keys($selectedPlayers, $id)) > 1;

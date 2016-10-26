@@ -6,7 +6,7 @@
       <th>Name</th>
       <th>Participants</th>
       <th>Started</th>
-      <?=Auth::authenticated() ? '<th>Remove</th>' : ''?>;
+      <?=Auth::authenticated() ? '<th>Remove</th>' : ''?>
     </tr>
 
   <?php
@@ -34,7 +34,7 @@
       <th>Name</th>
       <th>Participants</th>
       <th>Started</th>
-      <?=Auth::authenticated() ? '<th>Remove</th>' : ''?>;
+      <?=Auth::authenticated() ? '<th>Remove</th>' : ''?>
     </tr>
 
   <?php
