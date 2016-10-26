@@ -83,19 +83,4 @@ class PingPongGame{
   function getResults(){
     return Database::getGameResults($this->gameId);
   }
-
-//playerId should be the player who got eliminated
-  function newRound($playerId){
-
-  }
-
-  function addScore(){
-
-  }
-
-  public function newGame($name, $players){
-    //$this->gameId = Database::newGame($name, count($players));
-    //$this->gameId = Database::newGame($name, count($players));
-  }
-
 }
